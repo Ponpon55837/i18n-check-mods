@@ -1,0 +1,8 @@
+node_modules/
+.claude/types/
+*.log
+.DS_Store
+Thumbs.db
+
+# Written by Claude Code when it loads the mod (API typings for editors)
+plugins/*/.claude-plugin/types/

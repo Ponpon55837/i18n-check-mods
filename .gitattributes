@@ -1,2 +1,9 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Every text file is stored and checked out with LF, whatever core.autocrlf says,
+# so Windows checkouts do not flip the plugin's files to CRLF.
+* text=auto eol=lf
+
+# This fixture is CRLF on purpose: the scanner must handle Windows line endings.
+test/fixtures/single/src/views/Crlf.vue -text whitespace=cr-at-eol
+
+*.png binary
+*.gif binary

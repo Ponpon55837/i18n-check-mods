@@ -1,0 +1,18 @@
+{
+  "name": "i18n-check-mods",
+  "owner": { "name": "ponpon55837" },
+  "metadata": {
+    "description": "Claude Code mods for checking i18n",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "i18n-pixel",
+      "source": "./plugins/i18n-pixel",
+      "description": "Pixel-style i18n checker pane for single projects, monorepos and multi-project folders",
+      "version": "0.1.0",
+      "license": "MIT",
+      "keywords": ["i18n", "locale", "vue-i18n", "i18next", "monorepo", "pixel"]
+    }
+  ]
+}

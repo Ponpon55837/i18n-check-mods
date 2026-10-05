@@ -1,0 +1,25 @@
+{
+  "name": "i18n-check-mods",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Claude Code mods for checking i18n: a pixel-style i18n checker pane",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18",
+    "pnpm": ">=9"
+  },
+  "devEngines": {
+    "packageManager": { "name": "pnpm", "version": ">=9", "onFail": "error" }
+  },
+  "scripts": {
+    "validate": "claude plugin validate plugins/i18n-pixel",
+    "test": "node scripts/verify-scanner.mjs && node scripts/verify-install.mjs",
+    "security": "node scripts/security-check.mjs",
+    "versions": "node scripts/check-versions.mjs",
+    "check": "pnpm versions && pnpm test && pnpm security",
+    "scan": "node scripts/verify-scanner.mjs",
+    "plugin:install": "node scripts/install.mjs",
+    "plugin:uninstall": "node scripts/install.mjs --uninstall"
+  }
+}

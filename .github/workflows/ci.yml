@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: check (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    env:
+      # security-check.mjs runs `claude plugin validate` through this command.
+      CLAUDE_CMD: pnpm dlx @anthropic-ai/claude-code
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Line endings
+        # .gitattributes keeps every text file LF on checkout, Windows included; the one CRLF fixture is the exception.
+        run: |
+          bad=$(git ls-files --eol | grep -v 'i/lf' | grep -v 'test/fixtures/single/src/views/Crlf.vue' || true)
+          if [ -n "$bad" ]; then echo "Files not stored with LF:"; echo "$bad"; exit 1; fi
+          # Node, not grep: Git Bash's grep on Windows drops the CR before matching.
+          node -e "
+            const fs = require('fs')
+            if (fs.readFileSync('plugins/i18n-pixel/hooks/register.tsx', 'utf8').includes('\r')) throw new Error('register.tsx was checked out with CRLF')
+            if (!fs.readFileSync('test/fixtures/single/src/views/Crlf.vue', 'utf8').includes('\r\n')) throw new Error('Crlf.vue lost its CRLF')
+          "
+      - name: Versions
+        run: pnpm versions
+      - name: Scanner and install tests
+        run: pnpm test
+      - name: Validate and security check
+        run: pnpm security

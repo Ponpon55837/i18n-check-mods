@@ -1,0 +1,17 @@
+{
+  "name": "i18n-pixel",
+  "version": "0.1.0",
+  "description": "Pixel-style i18n checker pane: locale key parity, placeholders, unknown/dynamic t() keys and hardcoded CJK, for single projects, monorepos and multi-project folders",
+  "author": { "name": "ponpon55837" },
+  "license": "MIT",
+  "keywords": ["i18n", "locale", "vue-i18n", "i18next", "monorepo", "pixel"],
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "includeTests": {
+      "type": "boolean",
+      "title": "Include test files in the hardcoded-text check",
+      "description": "Also report hardcoded CJK text in *.spec/*.test files and e2e/, tests/, __tests__/, mocks/, fixtures/ folders",
+      "default": false
+    }
+  }
+}
